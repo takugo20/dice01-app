@@ -1,36 +1,71 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>サイコロアプリ</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: sans-serif;
-      margin-top: 100px;
-    }
-    #result {
-      font-size: 80px;
-      margin: 30px;
-    }
-    button {
-      font-size: 20px;
-      padding: 10px 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>サイコロアプリ</title>
+
+<style>
+  body {
+    text-align: center;
+    font-family: sans-serif;
+    margin-top: 100px;
+  }
+
+  img {
+    width: 120px;
+    margin: 30px;
+    transition: transform 0.2s;
+  }
+
+  .rolling {
+    animation: spin 0.5s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  button {
+    font-size: 20px;
+    padding: 10px 20px;
+  }
+</style>
 </head>
+
 <body>
 
-  <h1>サイコロ</h1>
-  <div id="result">🎲</div>
-  <button onclick="rollDice()">振る</button>
+<h1>サイコロ</h1>
 
-  <script>
-    function rollDice() {
-      const number = Math.floor(Math.random() * 6) + 1;
-      document.getElementById("result").textContent = number;
-    }
-  </script>
+<img id="dice" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Dice-1-b.svg">
+
+<br>
+
+<button onclick="rollDice()">振る</button>
+
+<script>
+function rollDice() {
+  const dice = document.getElementById("dice");
+
+  // 回転開始
+  dice.classList.add("rolling");
+
+  // 0.8秒後に止める
+  setTimeout(() => {
+    const number = Math.floor(Math.random() * 6) + 1;
+
+    dice.src = "https://upload.wikimedia.org/wikipedia/commons/" +
+      ["1/1b/Dice-1-b.svg",
+       "5/5f/Dice-2-b.svg",
+       "b/b1/Dice-3-b.svg",
+       "f/fd/Dice-4-b.svg",
+       "0/08/Dice-5-b.svg",
+       "2/26/Dice-6-b.svg"][number - 1];
+
+    dice.classList.remove("rolling");
+  }, 800);
+}
+</script>
 
 </body>
 </html>
